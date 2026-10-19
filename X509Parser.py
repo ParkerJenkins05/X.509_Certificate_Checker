@@ -234,6 +234,12 @@ def get_authority_key_identifier(cert: x509.Certificate):
                 else None
             ),
 
+            "authority_cert_issuer": [
+                name.value.rfc4514_string()
+                for name in (aki.authority_cert_issuer or [])
+                if isinstance(name, x509.DirectoryName)
+            ],
+            
             #Issuers can identify certs using serial numbers
             "authority_cert_serial_number":
                 aki.authority_cert_serial_number,
